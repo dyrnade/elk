@@ -41,3 +41,17 @@ sudo docker run --rm --name my-kibana -e ELASTICSEARCH_URL=http://$COREOS_PRIVAT
 cd config-dir
 sudo docker run -it --rm -v "$PWD":/config-dir logstash logstash -f /config-dir/log.conf
 ```
+
+### After running logstash container type some inputs and to see results ###
+
+For ElasticSearch
+
+```bash
+http://localhost:9200/_search?pretty
+```
+
+For Kibana
+
+```bash
+http://localhost:5601
+```
