@@ -1,14 +1,17 @@
 ### Download ElasticSearch Docker ###
+- https://registry.hub.docker.com/u/library/elasticsearch/
 
 ```bash
  docker pull elasticsearch
 ```
 ### Download Logstash Docker ###
+- https://registry.hub.docker.com/_/logstash/
 
 ```bash
  docker pull logstash
 ```
 ### Download Kibana Docker ###
+- https://registry.hub.docker.com/u/library/kibana/
 
 ```bash
 docker pull kibana
@@ -22,6 +25,14 @@ docker pull kibana
 sudo docker run --rm --name my-elasticsearch elasticsearch
 ```
 
+### Run Kibana container ###
+
+- Kibana runs at port 5601
+
+```bash
+sudo docker run --rm --name my-kibana -e ELASTICSEARCH_URL=http://$COREOS_PRIVATE_IPV4:9200 -P kibana
+```
+
 ### Run Logstash container ###
 
 - Download logstash.conf and create config-dir directory and put logstash.conf in it.
@@ -29,12 +40,4 @@ sudo docker run --rm --name my-elasticsearch elasticsearch
 ```bash
 cd config-dir
 sudo docker run -it --rm -v "$PWD":/config-dir logstash logstash -f /config-dir/log.conf
-```
-
-### Run Kibana container ###
-
-- Kibana runs at port 5601
-
-```bash
-sudo docker run --rm --name my-kibana -e ELASTICSEARCH_URL=http://$COREOS_PRIVATE_IPV4:9200 -P kibana
 ```
