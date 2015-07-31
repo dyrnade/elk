@@ -57,7 +57,7 @@ journalctl -o short -f | ncat --udp localhost 5000
 For ElasticSearch
 
 ```bash
-http://localhost:9200/_search?pretty
+curl http://localhost:9200/_search?pretty
 ```
 
 For Kibana
