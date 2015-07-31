@@ -41,7 +41,7 @@ sudo docker run -d --name kibana_container -e ELASTICSEARCH_URL=http://elastichs
 
 ```bash
 cd config-dir
-sudo docker run -it -d -p 5000:5000/udp --name my-logstash -v "$PWD":/config logstash logstash -f /config/log.conf
+sudo docker run -it -d -p 5000:5000/udp --name logstash_container -v "$PWD":/config logstash logstash -f /config/log.conf
 ```
 
 ### Send journald logs to logstash container ###
