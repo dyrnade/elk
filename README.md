@@ -32,7 +32,7 @@ sudo docker run -d -p 9200:9200 -p 9300:9300 --name elasticsearch_container elas
 - Kibana runs at port 5601
 
 ```bash
-sudo docker run -d --name kibana_container -e ELASTICSEARCH_URL=http://elastichsearch_container_ip:9200 -p 5601:5601 kibana
+sudo docker run -d --name kibana_container -e ELASTICSEARCH_URL=http://$COREOS_PRIVATE_IPV4:9200 -p 5601:5601 kibana
 ```
 
 ### Run Logstash container ###
