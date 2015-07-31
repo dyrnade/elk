@@ -1,3 +1,5 @@
+# ELK STACK FOR COREOS(JOURNALD) #
+
 ### Download ElasticSearch Docker ###
 - https://registry.hub.docker.com/u/library/elasticsearch/
 
@@ -22,7 +24,7 @@ docker pull kibana
 - ElasticSearch runs at port 9200
 
 ```bash
-sudo docker run --rm --name my-elasticsearch elasticsearch
+sudo docker run -d -p 9200:9200 -p 9300:9300 --name elasticsearch_container elasticsearch
 ```
 
 ### Run Kibana container ###
@@ -30,7 +32,7 @@ sudo docker run --rm --name my-elasticsearch elasticsearch
 - Kibana runs at port 5601
 
 ```bash
-sudo docker run --rm --name my-kibana -e ELASTICSEARCH_URL=http://$COREOS_PRIVATE_IPV4:9200 -P kibana
+sudo docker run -d --name kibana_container -e ELASTICSEARCH_URL=http://elastichsearch_container_ip:9200 -p 5601:5601 kibana
 ```
 
 ### Run Logstash container ###
@@ -39,15 +41,23 @@ sudo docker run --rm --name my-kibana -e ELASTICSEARCH_URL=http://$COREOS_PRIVAT
 
 ```bash
 cd config-dir
-sudo docker run -it --rm -v "$PWD":/config-dir logstash logstash -f /config-dir/log.conf
+sudo docker run -it -d -p 5000:5000/udp --name logstash_container -v "$PWD":/config logstash logstash -f /config/logstash.conf
 ```
+
+### Send journald logs to logstash container ###
+
+```bash
+
+journalctl -o short -f | ncat --udp localhost 5000
+```
+
 
 ### After running logstash container type some inputs and to see results ###
 
 For ElasticSearch
 
 ```bash
-http://localhost:9200/_search?pretty
+curl http://localhost:9200/_search?pretty
 ```
 
 For Kibana
