@@ -13,3 +13,4 @@ appender:
     layout:
       type: consolePattern
       conversionPattern: "[%d{ISO8601}][%-5p][%-25c] %m%n"
+
