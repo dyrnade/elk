@@ -10,7 +10,7 @@ RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4
 
 ENV ELASTICSEARCH_VERSION 1.7.1
-
+ENV ELASTICSEARCH_URL localhost:9200
 RUN echo "deb http://packages.elasticsearch.org/elasticsearch/${ELASTICSEARCH_VERSION%.*}/debian stable main" > /etc/apt/sources.list.d/elasticsearch.list
 
 RUN apt-get update \
@@ -19,7 +19,6 @@ RUN apt-get update \
 
 ENV PATH /usr/share/elasticsearch/bin:$PATH
 COPY elasticsearch_config /usr/share/elasticsearch/config
-COPY ./elasticsearch_config/supervisor_elasticsearch.conf /etc/supervisor/conf.d/supervisor_elasticsearch.conf
 
 VOLUME /usr/share/elasticsearch/data
 
@@ -42,7 +41,6 @@ RUN set -x \
 ENV PATH /opt/kibana/bin:$PATH
 
 COPY ./kibana_config/kibana.yml /opt/kibana/config/kibana.yml 
-COPY ./kibana_config/supervisor_kibana.conf /etc/supervisor/conf.d/supervisor_kibana.conf
 
 ################# LOGSTASH ####################
 
@@ -62,7 +60,6 @@ RUN set -x \
 ENV PATH /opt/logstash/bin:$PATH
 
 COPY ./logstash_config/logstash.conf /logstash_config/logstash.conf
-COPY ./logstash_config/supervisor_logstash.conf /etc/supervisor/conf.d/supervisor_logstash.conf
 
 ############### SUPERVISORD ################
 
@@ -71,9 +68,13 @@ COPY ./logstash_config/supervisor_logstash.conf /etc/supervisor/conf.d/superviso
 RUN apt-get update && apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
 
-#COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 #############################################
+
+COPY ./start.sh /start.sh
+RUN chmod +x start.sh
+
 EXPOSE 5601 9200 9300 5000
 
 CMD [ "/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
