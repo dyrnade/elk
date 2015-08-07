@@ -66,6 +66,11 @@ ENV PATH /opt/logstash/bin:$PATH
 
 COPY ./logstash_config/logstash.conf /logstash_config/logstash.conf
 
+RUN mkdir -p /opt/logstash/patterns \
+	&&chown logstash:logstash /opt/logstash/patterns
+
+COPY ./nginx /opt/logstash/patterns/nginx
+
 ############### SUPERVISORD ################
 
 
@@ -82,5 +87,4 @@ RUN chmod +x start.sh
 
 EXPOSE 5601 9200 9300 5000
 
-CMD [ "/usr/bin/supervisord" ]
-#, "-n", "-c", "/etc/supervisor/supervisord.conf"]
+CMD [ "/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
