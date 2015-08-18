@@ -29,7 +29,7 @@ sudo docker run -d --name logspout --volume=/var/run/docker.sock:/tmp/docker.soc
 journalctl -o short -f | ncat ELK_MACHINE_IP(HOSTNAME) 5301
 ```
 
-### You can directly send unit-files logs ###
+### You can directly send unit-files logs (unit-files captures stdout/stderr)###
 
 ```bash
 
