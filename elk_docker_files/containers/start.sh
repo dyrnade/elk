@@ -10,4 +10,4 @@ while [ ! "$(curl localhost:9200 2> /dev/null)" -a $counter -lt 30  ]; do
 done
 
 
-#/opt/logstash/bin/logstash -f /logstash_config/logstash.conf
+/opt/logstash/bin/logstash -f /logstash_config/logstash.conf
