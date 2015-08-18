@@ -69,8 +69,6 @@ COPY ./logstash_config/logstash.conf /logstash_config/logstash.conf
 RUN mkdir -p /opt/logstash/patterns \
 	&&chown logstash:logstash /opt/logstash/patterns
 
-COPY ./nginx /opt/logstash/patterns/nginx
-
 ############### SUPERVISORD ################
 
 
