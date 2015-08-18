@@ -19,7 +19,7 @@ sudo docker run -d -p 5000:5000/udp -p 5006:5006/udp -p 5301:5301 -p 9200:9200 -
 
 ```bash
 
-sudo docker run --name logspout --volume=/var/run/docker.sock:/tmp/docker.sock zetaops/logspout syslog://ELK_MACHINE_IP(HOSTNAME):5006
+sudo docker run -d --name logspout --volume=/var/run/docker.sock:/tmp/docker.sock zetaops/logspout syslog://ELK_MACHINE_IP(HOSTNAME):5006
 ```
 
 ### Send journald logs to elk container ###
