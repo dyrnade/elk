@@ -67,7 +67,8 @@ ENV PATH /opt/logstash/bin:$PATH
 COPY ./logstash_config/logstash.conf /logstash_config/logstash.conf
 
 RUN mkdir -p /opt/logstash/patterns \
-	&&chown logstash:logstash /opt/logstash/patterns
+	&& chown logstash:logstash /opt/logstash/patterns
+COPY ./patterns/haproxy /opt/logstash/patterns/haproxy
 
 ############### SUPERVISORD ################
 
