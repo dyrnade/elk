@@ -1,3 +1,5 @@
+# Elasticsearch enhancements
+
 bootstrap.mlockall: true
 
 # Indexing Settings for Writes
