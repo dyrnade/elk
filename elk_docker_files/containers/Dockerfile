@@ -84,6 +84,6 @@ COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./start.sh /start.sh
 RUN chmod +x start.sh
 
-EXPOSE 5601 9200 9300 5000
+EXPOSE 5601 9200 9300 5000 5006 5007
 
 CMD [ "/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
