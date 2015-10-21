@@ -4,6 +4,7 @@
 
 - port 5000 is for syslog (UDP and TCP)
 - port 5006 is for docker containers' logs (UDP)
+- port 5007 is for docker multiline-logs (UDP)
 - port 5301 is for journald logs (TCP)
 - port 9200 is for elasticsearch
 - port 5601 is for kibana
@@ -48,4 +49,38 @@ For Kibana
 
 ```bash
 http://ELK_MACHINE_IP(HOSTNAME):5601
+```
+
+### Configuration ###
+
+#### Logstash ####
+
+- We use logtash.conf for all configuration about logstash.
+- You can use grok patterns for writing filters by
+  https://github.com/logstash-plugins/logstash-patterns-core/blob/master/patterns/grok-patterns
+- You can try your filters for your logs at
+  http://grokdebug.herokuapp.com/
+
+#### Sending Logs From Remote Machines ####
+
+- Rsyslog
+
+Edit /etc/rsyslog.conf, add below lines.
+```bash
+$ModLoad imudp
+$UDPServerRun 514
+
+#for UDP
+*.* @logstash-server:port
+
+# for TCP
+*.* @@logstash-server:port
+```
+
+- Logspout
+
+Start logspout by below command
+
+```bash
+docker run -e SYSLOG_FORMAT=rfc3164 --name logspout --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/logspout syslog://logstash-server:port
 ```
